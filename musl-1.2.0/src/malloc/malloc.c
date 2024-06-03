@@ -174,6 +174,7 @@ static int adjust_size(size_t *n)
 	/* Result of pointer difference must fit in ptrdiff_t. */
 	if (*n-1 > PTRDIFF_MAX - SIZE_ALIGN - PAGE_SIZE) {
 		if (*n) {
+            // out of memory
 			errno = ENOMEM;
 			return -1;
 		} else {
@@ -181,6 +182,7 @@ static int adjust_size(size_t *n)
 			return 0;
 		}
 	}
+    // 添加chunk管理信息OVERHEAD，然后再进行一次
 	*n = (*n + OVERHEAD + SIZE_ALIGN - 1) & SIZE_MASK;
 	return 0;
 }
