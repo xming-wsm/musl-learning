@@ -25,6 +25,8 @@ struct bin {
 #define OVERHEAD (2*sizeof(size_t))         // chunk的前导大小，psize和csize占用的字节
 
 // MMAP门限值，0x1c00*4*sizeof(size_t)，32位系统是112kb，64位是224kb
+// 补充：224kb并不是乱取的，其为bin链表中管理的最大的chunk大小。如果超过了
+// 224kb，则直接用mmap分配内存，而不是搜索bin表中的free chunk
 #define MMAP_THRESHOLD (0x1c00*SIZE_ALIGN) 
 #define DONTCARE 16
 #define RECLAIM 163840  // 160kb
